@@ -43,6 +43,9 @@ class InputFragment : Fragment() {
                         InputScreen(
                             onInputSubmitted = { text, size ->
                                 inputListener?.onInputSubmitted(text, size)
+                            },
+                            onViewHistory = {
+                                (activity as? MainActivity)?.openHistory()
                             }
                         )
                     }
@@ -53,7 +56,10 @@ class InputFragment : Fragment() {
 }
 
 @Composable
-fun InputScreen(onInputSubmitted: (String, Int) -> Unit) {
+fun InputScreen(
+    onInputSubmitted: (String, Int) -> Unit,
+    onViewHistory: () -> Unit
+) {
     var text by remember { mutableStateOf("") }
     var selectedSize by remember { mutableStateOf(16) }
     var showDialog by remember { mutableStateOf(false) }
@@ -119,6 +125,15 @@ fun InputScreen(onInputSubmitted: (String, Int) -> Unit) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("OK")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = onViewHistory,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("View History")
         }
     }
 } 

@@ -49,7 +49,10 @@ class ResultFragment : Fragment() {
                         ResultScreen(
                             text = displayText,
                             textSize = textSize,
-                            onCancel = { cancelListener?.onCancel() }
+                            onCancel = { cancelListener?.onCancel() },
+                            onViewHistory = {
+                                (activity as? MainActivity)?.openHistory()
+                            }
                         )
                     }
                 }
@@ -59,7 +62,12 @@ class ResultFragment : Fragment() {
 }
 
 @Composable
-fun ResultScreen(text: String, textSize: Int, onCancel: () -> Unit) {
+fun ResultScreen(
+    text: String,
+    textSize: Int,
+    onCancel: () -> Unit,
+    onViewHistory: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,6 +86,15 @@ fun ResultScreen(text: String, textSize: Int, onCancel: () -> Unit) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Cancel")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = onViewHistory,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("View History")
         }
     }
 } 
